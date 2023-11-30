@@ -1,9 +1,12 @@
 package com.trabalho;
 
+import java.util.Random;
+
 import com.trabalho.armas.Arma;
 import com.trabalho.racas.Raca;
 
 public class Personagem {
+    private String id;
     private String nome;
     private int vida;
     private int forca;
@@ -11,65 +14,77 @@ public class Personagem {
     private int inteligencia;
     private Arma arma;
     private int nivel = 1;
-    
+
     public Personagem(String nome, int vida, Raca raca) {
         this.nome = nome;
+        Random random = new Random();
+        random.nextInt(vida);
+        this.id = String.valueOf(random.nextInt()) + nome;
         this.vida = vida;
         this.arma = raca.getArma();
         this.forca = raca.getForca();
         this.agilidade = raca.getAgilidade();
         this.inteligencia = raca.getInteligencia();
     }
-    
+
     public String getNome() {
         return this.nome;
     }
-    
+
     public int getVida() {
         return this.vida * this.nivel;
     }
-    
+
     public int getForca() {
         return this.forca * this.nivel;
     }
-    
+
     public int getAgilidade() {
         return this.agilidade * this.nivel;
     }
-    
+
     public int getInteligencia() {
         return this.inteligencia * this.nivel;
     }
-    
+
     public Arma getArma() {
         return this.arma;
     }
-    
+
+    public String getId() {
+        return this.id;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
     public void setVida(int vida) {
         this.vida = vida;
     }
-    
+
     public void setForca(int forca) {
         this.forca = forca;
     }
-    
+
     public void setAgilidade(int agilidade) {
         this.agilidade = agilidade;
     }
-    
+
     public void setInteligencia(int inteligencia) {
         this.inteligencia = inteligencia;
     }
-    
+
     public void setArma(Arma arma) {
         this.arma = arma;
     }
-    
+
     public void atacar(Personagem personagem) {
+        if (personagem.getId().equals(this.id)) {
+            System.out.println("O jogador não pode se atacar"); 
+            return;
+        }
+        System.out.println(this.nome + " atacando " + personagem.getNome());
         personagem.setVida(personagem.getVida() - (this.getForca() + this.getArma().getDano()));
     }
 
@@ -84,6 +99,8 @@ public class Personagem {
     }
 
     public String toString() {
-        return "Nome: " + this.getNome() + " - Vida: " + this.getVida() + " - Força: " + this.getForca() + " - Agilidade: " + this.getAgilidade() + " - Inteligência: " + this.getInteligencia() + " - Arma: " + this.getArma().getNome() + " - Dano: " + this.getArma().getDano();
+        return "Nome: " + this.getNome() + " - Vida: " + this.getVida() + " - Força: " + this.getForca()
+                + " - Agilidade: " + this.getAgilidade() + " - Inteligência: " + this.getInteligencia() + " - Arma: "
+                + this.getArma().getNome() + " - Dano: " + this.getArma().getDano();
     }
 }
